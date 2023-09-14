@@ -235,7 +235,7 @@ No code here; I want you to provide three questions that this data suggests to y
 
 Note: I could not access task 13 and 14 so I did not see any patterns that might have arisen in those tasks.
 
-1.  Why do certain terms have such significantly less classes than others? Are they Summer or Winter terms?
+1.  Do departments with more classes offer more seats
 
 2.  Is there a direct correspondence between number of students and number of seats?
 
