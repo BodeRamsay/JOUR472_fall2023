@@ -203,7 +203,7 @@ umd_courses |>
    arrange(desc(total_seats))
 ```
 
-Compared to the previous codeblock, what has changed and how did that affect the result? What do the top terms have in common? **Answer I am getting an error whenever I try to run this, though I believe that there would have been two extra columns being the mean and median of the seats in each class per term or it would have been the mean and median of all terms. On top of this, it would have arranged from most total seats to least total seats**
+Compared to the previous codeblock, what has changed and how did that affect the result? What do the top terms have in common? **There is two extra columns being the mean and median of the seats in each class.**
 
 ### Task 14: more aggregations
 
@@ -225,7 +225,7 @@ umd_courses |>
 
 Compared to the previous codeblock, what has changed and how did that affect the result? How is the data sorted?
 
-**Answer Again for some reason I am receiving an error trying to run this saying could not find function "arrange." This time it would have grouped everything by departments instead of terms and it would have included rows for the max/min_seats.**
+**Answer This time it grouped everything by departments instead of terms and it included rows for the max/min seats. It continued to organize the data by the most total seats per department**
 
 ### Task 12: Questions
 
