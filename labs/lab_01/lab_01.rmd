@@ -39,7 +39,7 @@ umd_courses <- read_rds("lab_01.rds")
 
 ## Answer questions
 
-**Q1** Which department has the highest mean (average) number of seats for its classes? You need to show the department with the highest average first. Which one is the most surprising/interesting to you? **A1 Air science was surprising because I did not expect it to have as high an average as it does. It is in the top 6 of average seats by department.**
+**Q1** Which department has the highest mean (average) number of seats for its classes? You need to show the department with the highest average first. Which one is the most surprising/interesting to you? **A1 Engineering had the highest with over 306. Air science was surprising because I did not expect it to have as high an average as it does. It is in the top 6 of average seats by department.**
 
 ```{r}
 umd_courses |>
