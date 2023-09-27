@@ -70,8 +70,8 @@ umd_courses |>
 maryland_expenses |>
   mutate(expenditure_date = mdy(expenditure_date)) |>
   mutate(month = floor_date(expenditure_date, "month")) |>
-  group_by(month) |>
   filter(str_detect(committee_name, "Moore  Wes For Maryland")) |>
+  group_by(month) |>
   summarise(total_amount = sum(amount)) |>
   arrange(month)
 ```
