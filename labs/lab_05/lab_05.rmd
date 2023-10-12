@@ -43,38 +43,56 @@ You will need to read in and clean up the data so that it can be used for analys
 
 ```{r}
 library(janitor)
+library(lubridate)
 
-overdose_calls <- read_csv("tabula-Baltimore County; Carey, Samantha log OD.csv", col_names = FALSE) |>
+baltco_911_overdose_calls <- read_csv("tabula-Baltimore County; Carey, Samantha log OD.csv", col_names = FALSE) |>
   clean_names() |>
-  rename(date = x1, time_of_day = x2, case_number = x3, EVYTP = x4, location = x5)
+  rename(date = x1, time = x2, case_number = x3, event_type = x4, location = x5) |>
+  mutate(date = mdy(date))
 
-overdose_calls
+baltco_911_overdose_calls
 ```
 
 ## Answer questions
 
 Q1. Write code to generate the number of calls that occurred on each date. Which date in 2022 had the most overdose calls, and how many? Look at the total number of rows in your result and explore the range of dates - based on your result, do you believe there are any days with no overdose calls at all? Explain why or why not.
 
-A1.
+A1. July 14th and October 4th had the most calls of any day that year, with 23. I got 329 rows, which leads me to believe there were some days that got no calls.
 
 ```{r}
+baltco_911_overdose_calls |>
+  filter(str_detect(date, '2022')) |>
+  group_by(date) |>
+  summarize(total_calls = n()) |>
+  arrange(desc(total_calls))
 ```
 
 Q2. You want to understand if there's a pattern in the day of the week that overdose calls are made. Add a column to your dataframe that displays what day of the week each date represents. You should search for how to do that using lubridate. Then write code to calculate the number of calls for each day of the week, and add a column to that result that calculates the percentage of all calls that occurred on each day of the week (so you want a dataframe with the day of the week, total number of calls and the percentage of calls on that day out of the total number of all calls). Describe your findings to me.
 
-A2.
+A2. Weekends and Mondays have the most calls
 
 ```{r}
+baltco_911_overdose_calls <- baltco_911_overdose_calls |>
+  mutate(day_of_week = wday(date))
+
+
+baltco_911_overdose_calls |>
+  group_by(day_of_week) |>
+  summarize(count = n()) |>
+  mutate(pct_total = count/4112*100)
 ```
 
 Q3. Now let's look at locations. Which ones have the most calls? How would you describe them (feel free to search for more information on them)? Is there anything about the structure of the original data that might make you less confident in the counts by location or date?
 
-A3.
+A3. 4540 Silver Spring Road had by far the most with 36, others having no more than 13. It may be possible there was not unity in how the locations were entered into the data, therefore causing some locations to not be properly grouped together here.
 
 ```{r}
-
+baltco_911_overdose_calls |>
+  group_by(location) |>
+  summarize(count = n()) |>
+  arrange(desc(count))
 ```
 
 Q4. What's the best story idea or question you've seen as a result of the work you've done in this lab?
 
-A4.
+A4. Do weekends and Mondays have more overdose calls? Why or why not?
