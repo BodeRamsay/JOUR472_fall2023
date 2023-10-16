@@ -1760,13 +1760,32 @@ the chunk or by placing your cursor inside it and pressing
 <em>Cmd+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmhvbWljaWRlX2RhdGEgPC0gcmVhZF9jc3YoXCJEZXNrdG9wL0pPVVI0NzIvSk9VUjQ3Ml9mYWxsMjAyMy9SZXBvX1Byb2plY3QvaG9taWNpZGUtZGF0YS5jc3ZcIilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkodGlkeXZlcnNlKVxuaG9taWNpZGVfZGF0YSA8LSByZWFkX2NzdihcImhvbWljaWRlLWRhdGEuY3N2XCIpXG5gYGAifQ== -->
 <pre class="r"><code>library(readr)
-homicide_data &lt;- read_csv(&quot;Desktop/JOUR472/JOUR472_fall2023/Repo_Project/homicide-data.csv&quot;)</code></pre>
+library(tidyverse)
+homicide_data &lt;- read_csv(&quot;homicide-data.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6ICdEZXNrdG9wL0pPVVI0NzIvSk9VUjQ3Ml9mYWxsMjAyMy9SZXBvX1Byb2plY3QvaG9taWNpZGUtZGF0YS5jc3YnIGRvZXMgbm90IGV4aXN0IGluIGN1cnJlbnQgd29ya2luZyBkaXJlY3RvcnkgKCcvVXNlcnMvYm9kZS9EZXNrdG9wL0pPVVI0NzIvSk9VUjQ3Ml9mYWxsMjAyMy9SZXBvX1Byb2plY3QnKS5cbiJ9 -->
-<pre><code>Error: &#39;Desktop/JOUR472/JOUR472_fall2023/Repo_Project/homicide-data.csv&#39; does not exist in current working directory (&#39;/Users/bode/Desktop/JOUR472/JOUR472_fall2023/Repo_Project&#39;).</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNTIxNzkgQ29sdW1uczogMTLilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5EZWxpbWl0ZXI6IFwiLFwiXG5jaHIgKDkpOiB1aWQsIHZpY3RpbV9sYXN0LCB2aWN0aW1fZmlyc3QsIHZpY3RpbV9yYWNlLCB2aWN0aW1fYWdlLCB2aWN0aW1fc2V4LCBjaXR5LCBzdGF0ZSwgZGlzcG9zaXRpb25cbmRibCAoMyk6IHJlcG9ydGVkX2RhdGUsIGxhdCwgbG9uXG7ihLkgVXNlIGBzcGVjKClgIHRvIHJldHJpZXZlIHRoZSBmdWxsIGNvbHVtbiBzcGVjaWZpY2F0aW9uIGZvciB0aGlzIGRhdGEuXG7ihLkgU3BlY2lmeSB0aGUgY29sdW1uIHR5cGVzIG9yIHNldCBgc2hvd19jb2xfdHlwZXMgPSBGQUxTRWAgdG8gcXVpZXQgdGhpcyBtZXNzYWdlLlxuIn0= -->
+<pre><code>Rows: 52179 Columns: 12── Column specification ──────────────────────────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (9): uid, victim_last, victim_first, victim_race, victim_age, victim_sex, city, state, disposition
+dbl (3): reported_date, lat, lon
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaG9taWNpZGVfZGF0YSA8LSBob21pY2lkZV9kYXRhIHw+XG4gIG11dGF0ZShyZXBvcnRlZF9kYXRlID0geW1kKHJlcG9ydGVkX2RhdGUpKVxuYGBgIn0= -->
+<pre class="r"><code>homicide_data &lt;- homicide_data |&gt;
+  mutate(reported_date = ymd(reported_date))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2FzIDEgd2FybmluZyBpbiBgbXV0YXRlKClgLlxu4oS5IEluIGFyZ3VtZW50OiBgcmVwb3J0ZWRfZGF0ZSA9IHltZChyZXBvcnRlZF9kYXRlKWAuXG5DYXVzZWQgYnkgd2FybmluZzpcbiEgIDIgZmFpbGVkIHRvIHBhcnNlLlxuIn0= -->
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `reported_date = ymd(reported_date)`.
+Caused by warning:
+!  2 failed to parse.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhob21pY2lkZV9kYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>View(homicide_data)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the
@@ -1778,14 +1797,13 @@ press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
 editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not
 run any R code chunks. Instead, the output of the chunk when it was last
 run in the editor is displayed.</p>
-<p><strong>&quot;As Baltimore has seen a stunning surge of violence, with
-nearly a killing each day for the past three years in a city of 600,000,
-homicide arrests have plummeted.&quot;</strong></p>
+<p><strong>Sentence: &quot;As Baltimore has seen a stunning surge of
+violence, with nearly a killing each day for the past three years in a
+city of 600,000</strong>…<strong>&quot;</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaG9taWNpZGVfZGF0YSB8PlxuICBtdXRhdGUocmVwb3J0ZWRfZGF0ZSA9IHltZChyZXBvcnRlZF9kYXRlKSkgfD5cbiAgbXV0YXRlKHllYXIgPSB5ZWFyKHJlcG9ydGVkX2RhdGUpKSB8PlxuICBmaWx0ZXIoc3RyX2RldGVjdChjaXR5LCAnQmFsdGltb3JlJykpIHw+XG4gIGZpbHRlcih5ZWFyID09ICcyMDE3JyB8IHllYXIgPT0gJzIwMTYnIHwgeWVhciA9PSAnMjAxNScpIHw+XG4gIGdyb3VwX2J5KHllYXIpIHw+XG4gIHN1bW1hcml6ZShcbiAgICBjb3VudCA9IG4oKSxcbiAgICBhdmVyYWdlX3Blcl9kYXkgPSAoY291bnQvMzY1KVxuICApXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaG9taWNpZGVfZGF0YSB8PlxuICBtdXRhdGUoeWVhciA9IHllYXIocmVwb3J0ZWRfZGF0ZSkpIHw+XG4gIGZpbHRlcihzdHJfZGV0ZWN0KGNpdHksICdCYWx0aW1vcmUnKSkgfD5cbiAgZmlsdGVyKHllYXIgPT0gJzIwMTcnIHwgeWVhciA9PSAnMjAxNicgfCB5ZWFyID09ICcyMDE1JykgfD5cbiAgZ3JvdXBfYnkoeWVhcikgfD5cbiAgc3VtbWFyaXplKFxuICAgIGNvdW50ID0gbigpLFxuICAgIGF2ZXJhZ2VfcGVyX2RheSA9IChjb3VudC8zNjUpXG4gIClcbmBgYCJ9 -->
 <pre class="r"><code>homicide_data |&gt;
-  mutate(reported_date = ymd(reported_date)) |&gt;
   mutate(year = year(reported_date)) |&gt;
   filter(str_detect(city, &#39;Baltimore&#39;)) |&gt;
   filter(year == &#39;2017&#39; | year == &#39;2016&#39; | year == &#39;2015&#39;) |&gt;
@@ -1795,13 +1813,7 @@ homicide arrests have plummeted.&quot;</strong></p>
     average_per_day = (count/365)
   )</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2FzIDEgd2FybmluZyBpbiBgbXV0YXRlKClgLlxu4oS5IEluIGFyZ3VtZW50OiBgcmVwb3J0ZWRfZGF0ZSA9IHltZChyZXBvcnRlZF9kYXRlKWAuXG5DYXVzZWQgYnkgd2FybmluZzpcbiEgIDIgZmFpbGVkIHRvIHBhcnNlLlxuIn0= -->
-<pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `reported_date = ymd(reported_date)`.
-Caused by warning:
-!  2 failed to parse.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6Mywic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIzIMOXIDMiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBd3R5aVREbWl1QmlZR0JnWm1CaFptUmdaZ1V5R1ZoRFE5eDBMUmdZV0ppQUhFWUdGZ1pPRUYwQlZDUU1Wc25Bd0FlaUhlYlhnRlF6T014dmdOSXRERkRBQzFISEdBYkVEa0FjQXROai8vYjNxVTJxOS9mYXYrRmpaMjQ4OE1EKzdibm54VHZ2dkVPempEVXZNVGUxR01nUWdEZ05MTWhTbVpwWUJGT1FuRithVndMbDhDZVdwUllscHFmR0Y2UVd4YWNrVnFJWnhsbVVYNjRITXhEa01pYVFlLy8vLy84WDNkYmtuTVJpbUswd1FhNlV4SkpFdmJRaW9INGc3eCthRnZiOGdwTE0vRHlnSmlaUTJMQ2lhV1lzUWhQZ0w4MER1U1JGTnptak5DOWIxeGhrQVZnYUVXNk0wREJHWW9Pc1pQb1BOWW9WYWhSYmFsNTZabDRxek8wNWlVbXBPVkFPSDlESFlBL3JGUlJsd29PSkN5aGFyRmVTWDVJSVU4ZVZuSjhERXdIN2plRWZBSFVKeDlVU0FnQUEifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6Mywic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIzIMOXIDMiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBd3R5aVREbWl1QmlZR0JnWm1CaFptUmdaZ1V5R1ZoRFE5eDBMUmdZV0ppQUhFWUdGZ1pPRUYwQlZDUU1Wc25Bd0FlaUhlYlhnRlF6T014dmdOSXRERkRBQzFISEdBYkVEa0FjQXROai8vYjNxVTJxOS9mYXYrRmpaMjQ4OE1EKzdibm54VHZ2dkVPempEVXZNVGUxR01nUWdEZ05MTWhTbVpwWUJGT1FuRithVndMbDhDZVdwUllscHFmR0Y2UVd4YWNrVnFJWnhsbVVYNjRITXhEa01pYVFlLy8vLy84WDNkYmtuTVJpbUswd1FhNlV4SkpFdmJRaW9INGc3eCthRnZiOGdwTE0vRHlnSmlaUTJMQ2lhV1lzUWhQZ0w4MER1U1JGTnptak5DOWIxeEJrQVZnYUVXNk0wREJHWW9Pc1pQb1BOWW9WYWhSYmFsNTZabDRxek8wNWlVbXBPVkFPSDlESFlBL3JGUlJsd29PSkN5aGFyRmVTWDVJSVU4ZVZuSjhERXdIN2plRWZBREZOZXhNU0FnQUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]},{"label":["average_per_day"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2015","2":"342","3":"0.9369863"},{"1":"2016","2":"320","3":"0.8767123"},{"1":"2017","2":"340","3":"0.9315068"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
@@ -1809,11 +1821,8 @@ Caused by warning:
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p><img src /></p>
-<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4KClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLgoKYGBge3J9CmxpYnJhcnkocmVhZHIpCmhvbWljaWRlX2RhdGEgPC0gcmVhZF9jc3YoIkRlc2t0b3AvSk9VUjQ3Mi9KT1VSNDcyX2ZhbGwyMDIzL1JlcG9fUHJvamVjdC9ob21pY2lkZS1kYXRhLmNzdiIpCgpob21pY2lkZV9kYXRhIDwtIGhvbWljaWRlX2RhdGEgfD4KICBtdXRhdGUocmVwb3J0ZWRfZGF0ZSA9IHltZChyZXBvcnRlZF9kYXRlKSkKClZpZXcoaG9taWNpZGVfZGF0YSkKYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ21kK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgoqKlwiQXMgQmFsdGltb3JlIGhhcyBzZWVuIGEgc3R1bm5pbmcgc3VyZ2Ugb2YgdmlvbGVuY2UsIHdpdGggbmVhcmx5IGEga2lsbGluZyBlYWNoIGRheSBmb3IgdGhlIHBhc3QgdGhyZWUgeWVhcnMgaW4gYSBjaXR5IG9mIDYwMCwwMDAsIGhvbWljaWRlIGFycmVzdHMgaGF2ZSBwbHVtbWV0ZWQuXCIqKgoKYGBge3J9CmhvbWljaWRlX2RhdGEgfD4KICBtdXRhdGUocmVwb3J0ZWRfZGF0ZSA9IHltZChyZXBvcnRlZF9kYXRlKSkgfD4KICBtdXRhdGUoeWVhciA9IHllYXIocmVwb3J0ZWRfZGF0ZSkpIHw+CiAgZmlsdGVyKHN0cl9kZXRlY3QoY2l0eSwgJ0JhbHRpbW9yZScpKSB8PgogIGZpbHRlcih5ZWFyID09ICcyMDE3JyB8IHllYXIgPT0gJzIwMTYnIHwgeWVhciA9PSAnMjAxNScpIHw+CiAgZ3JvdXBfYnkoeWVhcikgfD4KICBzdW1tYXJpemUoCiAgICBjb3VudCA9IG4oKSwKICAgIGF2ZXJhZ2VfcGVyX2RheSA9IChjb3VudC8zNjUpCiAgKQpgYGAKCiFbXSgpCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4KClRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLgoKYGBge3J9CmxpYnJhcnkocmVhZHIpCmhvbWljaWRlX2RhdGEgPC0gcmVhZF9jc3YoImhvbWljaWRlLWRhdGEuY3N2IikKCmhvbWljaWRlX2RhdGEgPC0gaG9taWNpZGVfZGF0YSB8PgogIG11dGF0ZShyZXBvcnRlZF9kYXRlID0geW1kKHJlcG9ydGVkX2RhdGUpKQoKVmlldyhob21pY2lkZV9kYXRhKQpgYGAKCkFkZCBhIG5ldyBjaHVuayBieSBjbGlja2luZyB0aGUgKkluc2VydCBDaHVuayogYnV0dG9uIG9uIHRoZSB0b29sYmFyIG9yIGJ5IHByZXNzaW5nICpDbWQrT3B0aW9uK0kqLgoKV2hlbiB5b3Ugc2F2ZSB0aGUgbm90ZWJvb2ssIGFuIEhUTUwgZmlsZSBjb250YWluaW5nIHRoZSBjb2RlIGFuZCBvdXRwdXQgd2lsbCBiZSBzYXZlZCBhbG9uZ3NpZGUgaXQgKGNsaWNrIHRoZSAqUHJldmlldyogYnV0dG9uIG9yIHByZXNzICpDbWQrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4KClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCioqU2VudGVuY2U6IFwiQXMgQmFsdGltb3JlIGhhcyBzZWVuIGEgc3R1bm5pbmcgc3VyZ2Ugb2YgdmlvbGVuY2UsIHdpdGggbmVhcmx5IGEga2lsbGluZyBlYWNoIGRheSBmb3IgdGhlIHBhc3QgdGhyZWUgeWVhcnMgaW4gYSBjaXR5IG9mIDYwMCwwMDAqKi4uLioqXCIqKgoKYGBge3J9CmhvbWljaWRlX2RhdGEgfD4KICBtdXRhdGUoeWVhciA9IHllYXIocmVwb3J0ZWRfZGF0ZSkpIHw+CiAgZmlsdGVyKHN0cl9kZXRlY3QoY2l0eSwgJ0JhbHRpbW9yZScpKSB8PgogIGZpbHRlcih5ZWFyID09ICcyMDE3JyB8IHllYXIgPT0gJzIwMTYnIHwgeWVhciA9PSAnMjAxNScpIHw+CiAgZ3JvdXBfYnkoeWVhcikgfD4KICBzdW1tYXJpemUoCiAgICBjb3VudCA9IG4oKSwKICAgIGF2ZXJhZ2VfcGVyX2RheSA9IChjb3VudC8zNjUpCiAgKQpgYGAK</div>
 
 
 

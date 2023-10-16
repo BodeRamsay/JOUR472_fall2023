@@ -9,7 +9,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 library(readr)
-homicide_data <- read_csv("Desktop/JOUR472/JOUR472_fall2023/Repo_Project/homicide-data.csv")
+homicide_data <- read_csv("homicide-data.csv")
 
 homicide_data <- homicide_data |>
   mutate(reported_date = ymd(reported_date))
@@ -23,11 +23,10 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-**\"As Baltimore has seen a stunning surge of violence, with nearly a killing each day for the past three years in a city of 600,000, homicide arrests have plummeted.\"**
+**Sentence: \"As Baltimore has seen a stunning surge of violence, with nearly a killing each day for the past three years in a city of 600,000**...**\"**
 
 ```{r}
 homicide_data |>
-  mutate(reported_date = ymd(reported_date)) |>
   mutate(year = year(reported_date)) |>
   filter(str_detect(city, 'Baltimore')) |>
   filter(year == '2017' | year == '2016' | year == '2015') |>
@@ -37,5 +36,3 @@ homicide_data |>
     average_per_day = (count/365)
   )
 ```
-
-![]()
