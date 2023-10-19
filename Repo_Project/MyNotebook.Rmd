@@ -9,12 +9,12 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 library(readr)
+library(tidyverse)
+library(janitor)
 homicide_data <- read_csv("homicide-data.csv")
 
 homicide_data <- homicide_data |>
-  mutate(reported_date = ymd(reported_date))
-
-View(homicide_data)
+  mutate(reported_date = ymd(reported_date), year = year(reported_date)) 
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
@@ -23,10 +23,11 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-**Sentence: "As Baltimore has seen a stunning surge of violence, with nearly a killing each day for the past three years in a city of 600,000**...**"**
+**Sentence 1: "As Baltimore has seen a stunning surge of violence, with nearly a killing each day for the past three years in a city of 600,000...**"
 
 ```{r}
 homicide_data |>
+  mutate(reported_date = ymd(reported_date)) |>
   mutate(year = year(reported_date)) |>
   filter(str_detect(city, 'Baltimore')) |>
   filter(year == '2017' | year == '2016' | year == '2015') |>
@@ -36,3 +37,51 @@ homicide_data |>
     average_per_day = (count/365)
   )
 ```
+
+**Sentence 2: "Of 50 of the nation\'s largest cities, Baltimore is one of 34 where police now make homicide arrests less often than in 2014, according to a Washington Post analysis."**
+
+```{r}
+arrests_2014 <- homicide_data |>
+  filter(year == "2014" & disposition == "Closed by arrest") |>
+  group_by(city) |>
+  summarize(arrests_2014 = n())
+  
+arrests_2017 <- homicide_data |>
+  filter(year == "2017" & disposition == "Closed by arrest") |>
+  group_by(city) |>
+  summarize(arrests_2017 = n())
+
+homicide_arrests <- arrests_2014 |>
+  left_join(arrests_2017) |>
+  mutate(pct_change = ((arrests_2017 - arrests_2014)/arrests_2014)) |>
+  filter(pct_change < 0)
+
+show(homicide_arrests)
+```
+
+We found an issue with the code, since Baltimore seems to actually have gone up in arrests and there is not 34 cities that have gone down in arrests but 24 of the cities according to this data
+
+**Sentence 3: Baltimore is also one of 30 cities that have seen an increase in homicides in recent years, with the greatest raw number increase in killings of any city other than Chicago, which has four times the population.**
+
+```{r}
+
+homicide_count_2012 <- homicide_data |>
+  filter(year == '2012') |>
+  group_by(city) |>
+  summarize(homicide_count_2012 = n())
+
+homicide_count_2017 <- homicide_data |>
+  filter(year == '2017') |>
+  group_by(city) |>
+  summarize(homicide_count_2017 = n())
+
+homicide_data_combined <- homicide_count_2017 |>
+  left_join(homicide_count_2012) |>
+  filter(city != 'New York') |>
+  mutate(raw_number_increase = homicide_count_2017 - homicide_count_2012) |>
+  arrange(desc(raw_number_increase))
+
+show(homicide_data_combined)
+```
+
+Recent years was vague, so we weren't too certain which year they were referring to. However, using the year 2012 as a starting point was not all too far off the data they produced, with Baltimore instead being in third in raw number increase and there being 22 cities who saw an increase in homicides in this period instead of 30.
