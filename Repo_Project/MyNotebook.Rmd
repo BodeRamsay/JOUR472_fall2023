@@ -3,7 +3,7 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+Loading data and libraries:
 
 ```{r}
 library(readr)
@@ -17,23 +17,43 @@ homicide_data <- homicide_data |>
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
 **Sentence 1: "As Baltimore has seen a stunning surge of violence, with nearly a killing each day for the past three years in a city of 600,000...**"
 
 ```{r}
 homicide_data |>
-  mutate(reported_date = ymd(reported_date)) |>
-  mutate(year = year(reported_date)) |>
   filter(str_detect(city, 'Baltimore')) |>
-  filter(year == '2017' | year == '2016' | year == '2015') |>
+  filter(year == '2017' | year == '2016' | year == '2015' | year == '2014' | year == '2013' | year == '2012') |>
   group_by(year) |>
   summarize(
     count = n(),
     average_per_day = (count/365)
   )
+```
+
+Comments: None really, got the expected data here with the numbers not being all too far off of one murder per day and saw the extreme surge in violence.
+
+```{r}
+homicide_data_visual <- homicide_data |>
+  filter(str_detect(city, 'Baltimore')) |>
+  filter(year == '2017' | year == '2016' | year == '2015' | year == '2014' | year == '2013' | year == '2012') |>
+  group_by(year) |>
+  summarize(
+    count = n(),
+    average_per_day = (count/365)
+  )
+
+homicide_data_visual |>
+  ggplot() +
+  geom_bar(aes(x=year, weight=count)) +
+  scale_x_continuous(breaks=c(2012,2013,2014,2015,2016,2017)) +
+  labs(
+    title = "Average Homocides Per Year in Baltimore",
+    x = "year",
+    y = "total homicides"
+  ) +
+  theme_clean()
+
+homicide_data_visual
 ```
 
 **Sentence 2: "Of 50 of the nation's largest cities, Baltimore is one of 34 where police now make homicide arrests less often than in 2014, according to a Washington Post analysis."**
@@ -52,12 +72,12 @@ arrests_2017 <- homicide_data |>
 homicide_arrests <- arrests_2014 |>
   left_join(arrests_2017) |>
   mutate(pct_change = ((arrests_2017 - arrests_2014)/arrests_2014)) |>
-  filter(pct_change < 0)
+  filter(pct_change > 0)
 
 show(homicide_arrests)
 ```
 
-We found an issue with the code, since Baltimore seems to actually have gone up in arrests and there is not 34 cities that have gone down in arrests but 24 of the cities according to this data
+Comments: We found an issue with the code, since Baltimore seems to actually have gone up in arrests and there is not 34 cities that have gone down in arrests but 24 of the cities according to this data. Not exactly sure what is causing us to get these very different results from the Washington Post.
 
 **Sentence 3: Baltimore is also one of 30 cities that have seen an increase in homicides in recent years, with the greatest raw number increase in killings of any city other than Chicago, which has four times the population.**
 
@@ -82,4 +102,27 @@ homicide_data_combined <- homicide_count_2017 |>
 show(homicide_data_combined)
 ```
 
-Recent years was vague, so we weren't too certain which year they were referring to. However, using the year 2012 as a starting point was not all too far off the data they produced, with Baltimore instead being in third in raw number increase and there being 22 cities who saw an increase in homicides in this period instead of 30.
+Comments: Recent years was vague, so we weren't too certain which year they were referring to. However, using the year 2012 as a starting point was not all too far off the data they produced, with Baltimore instead being in third in raw number increase instead of second behind Chicago and there being 22 cities who saw an increase in homicides in this period instead of 30.
+
+**Sentence 4: "For most of the decade before 2015, Baltimore's annual homicide arrest rate hovered at about 40 percent. Since 2015, the arrest rate hasn't topped 30 percent in any year."**
+
+```{r}
+
+baltimore_arrests_by_year <- homicide_data |> 
+  filter(city == "Baltimore", disposition == "Closed by arrest") |>
+  group_by(year) |>
+  summarize(arrests = n())
+
+baltimore_homicides_by_year <- homicide_data |>
+  filter(city == "Baltimore") |>
+  group_by(year) |>
+  summarize(homicides = n())
+
+baltimore_arrest_rate <- baltimore_arrests_by_year |>
+  left_join(baltimore_homicides_by_year, by= "year") |>
+  mutate(arrest_rate = (arrests/homicides)*100)
+  
+baltimore_arrest_rate
+```
+
+Comments:
