@@ -125,4 +125,20 @@ baltimore_arrest_rate <- baltimore_arrests_by_year |>
 baltimore_arrest_rate
 ```
 
-Comments:
+Comments: This very clearly shows that there point is true
+
+**Sentence 5: "Of the 1,002 homicides between 2015 and the beginning of this year, just 252 --- one out of every four --- resulted in an arrest."**
+
+```{r}
+recent_homicide_data <- homicide_data |>
+  filter(str_detect(city, 'Baltimore')) |>
+  filter(year == '2015' | year == '2016' | year == '2017' | year == '2018')
+
+total_arrest_count <- recent_homicide_data |>
+  filter(disposition == "Closed by arrest")
+
+recent_homicide_data
+total_arrest_count
+```
+
+Comments: As you can see, the first dataset containing the number of cases during this time has 1,002 cases shown by the number of rows and the second dataset showing the number of cases closed by arrest has 252 rows. Each of these numbers are exactly correct compared to the numbers used in the story, therefore we have the correct answer.
