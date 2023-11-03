@@ -122,8 +122,5 @@ pg_calls_zipcode <- pg_call |>
   group_by(zipcode) |>
   summarize(total_zip = n())
 
-md_data <- get_acs(geography = "ZCTA",
-                   variables = c(medincome = "B19013_001"),
-                   state = "MD",
-                   year = 2022)
+md_median_income_zip <- get_acs(geography = "zcta", variables = "B19013_001", year=2019, state="MD")
 ```

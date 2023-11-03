@@ -116,10 +116,16 @@ moco_join_pop_calls <- moco_join_pop_calls |>
 
 **Q5** Go back to your joined dataframe from Q3 and add two more columns representing the minimum and maximum populations based on the estimate and margin of error, then calculate per capita rates for each. Do you get the same two zip codes for the highest and lowest as you did before? Does that give you more or less confidence in your answers to Q3?
 
-**A5**
+**A5 20877 is still the highest for maximum population while for me 20903 shows up as the lowest rate. This gives me more confidence for 20877 but less confidence for 20707.**
 
 ```{r}
+moco_2022_overdoses_zips |>
+  group_by(zip) |>
+  summarize(total_calls = n())
 
 moco_join_pop_calls |>
-  mutate(minimum_pop = estimate - moe, maximum_pop = estimate + moe)
+  mutate(minimum_pop = estimate - moe, maximum_pop = estimate + moe) |>
+  mutate(min_pop_rate = (total_calls/minimum_pop)*1000, max_pop_rate = 
+           (total_calls/maximum_pop)*1000) |>
+  arrange(desc(max_pop_rate))
 ```
