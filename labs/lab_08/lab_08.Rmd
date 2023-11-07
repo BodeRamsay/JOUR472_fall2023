@@ -114,13 +114,26 @@ To answer this question, do the following:
 6.  Add a label for each point that shows the zip code using geom_text() - see some examples of its use at <https://ggplot2.tidyverse.org/reference/geom_text.html#ref-examples>. Try to make the names as easy to read as possible by avoiding overlap.
 7.  In the answer space below, describe what you see and answer the questions posed above. In a general sense, what do you think this means? Feel free to consider the actual raw values: how would you report out the main point(s) of this chart?
 
-**A3.**
+**A3. There is a weak negative correlation in the scatterplot that was printed out. The highest number of calls all come from places with low median incomes, but there are also many places with low median incomes that have a very low number of calls. On the other hand, zipcodes with the highest median incomes do tend to have lower calls, which supports a correlation there.**
 
 ```{r}
 pg_calls_zipcode <- pg_call |>
   filter(zipcode != '0', zipcode != 'Q', zipcode != 'NA') |>
   group_by(zipcode) |>
-  summarize(total_zip = n())
+  summarize(total_calls = n())
 
-md_median_income_zip <- get_acs(geography = "zcta", variables = "B19013_001", year=2019, state="MD")
+md_median_income_zip <- get_acs(geography = "zcta", variables = "B19013_001", year=2019, state="MD") |> rename(zipcode = GEOID, median_income = estimate)
+
+joined_data <- pg_calls_zipcode |>
+  left_join(md_median_income_zip, by = "zipcode") |>
+  select(zipcode, total_calls, median_income, moe)
+
+joined_data |>
+  ggplot() + 
+  geom_point(aes(x=median_income, y=total_calls)) + 
+  labs(
+    title = "Total 911 Calls Compared with Median Income per Zipcode",
+    x = "Median Income",
+    y = "Total Calls"
+  )
 ```
