@@ -49,11 +49,11 @@ unique_words <- md_attorney_sanctions |> select(text) |>
 #Load stop words
 data("stop_words")
 
-stop_words <- stop_words |>
-  add_row(word = 'failing') |>
-  add_row(word = 'client') |>
-  add_row(word = 'respondent') |>
-  add_row(word = 'attorney')
+# stop_words <- stop_words |>
+  # add_row(word = 'failing') |>
+  # add_row(word = 'client') |>
+  # add_row(word = 'respondent') |>
+  # add_row(word = 'attorney')
 ```
 
 ```{r}
