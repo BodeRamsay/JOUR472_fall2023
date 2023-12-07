@@ -92,4 +92,44 @@ roster_2023_24 |>
   arrange(desc(mean_total_inches))
 ```
 
-Notes: Texas is the tallest team in the power five with an average height of over 6'1". UCLA, Indiana, South Carolina, Michigan and Missouri are all not far behind.
+Notes: Texas is the tallest team in the power five with an average height of over 6'1". UCLA, Indiana, South Carolina, Michigan and Missouri are all not far behind. You can see that these teams have out-rebounded there opponents greatly by looking at rebounding margin on this link:
+
+<https://www.ncaa.com/stats/basketball-women/d1/current/team/117>
+
+**This is our most newsworthy finding right now**, showing a decent correlation between height and rebounding. Because there is no way to download the data online without a bunch of extensive work and external tools, I cannot perform a correlation test here but seeing many of the top teams in average height correspond with rebounding is certainly very convincing
+
+**Question 3: What is the percentage of freshmen, sophomores, juniors, seniors, redshirts, and grad students per each team and how has it changed over time?**
+
+```{r}
+#create a dataframe with the team, year, and redshirt columns, then group by team and reshirts to find a count of each year
+
+#mutate a total column as well as percent columns
+
+#look at each year separately and potentially combine to see change over time
+```
+
+Notes:
+
+**Question 4: What school took in the most transfers? What school had the most players transfer out?**
+
+```{r}
+#filter for only the players with something in the previous_school column
+
+#create two different dataframes: one grouped by team and one grouped by previous_school
+
+#potentially pull in external transfer data to create a more comprehensive list
+```
+
+Notes:
+
+**Question 5: Which teams have the most in-state players?**
+
+```{r}
+#create a column that checks if the state column for the team and the state column for the player's home state match
+
+#filter for only the players that had a match
+
+#group by team and count
+```
+
+Notes:
