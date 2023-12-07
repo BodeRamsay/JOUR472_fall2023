@@ -21,7 +21,7 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 library(tidyverse)
 library(janitor)
 
-roster_2002_21 <- read_csv("wbb_rosters_2020_21.csv")
+roster_2020_21 <- read_csv("wbb_rosters_2020_21.csv")
 roster_2021_22 <- read_csv("wbb_rosters_2021_22.csv")
 roster_2022_23 <- read_csv("wbb_rosters_2022_23.csv")
 roster_2023_24 <- read_csv("wbb_rosters_2023_24.csv")
@@ -33,3 +33,63 @@ years_cleaned <- old_years_cleaned |>
 ```
 
 Note: Data was cleaned for us. You can see in the last couple columns of each of the roster data sets that they were cleaned for us by whoever modified the data then. The only real limitations of this data is that they do not provide data earlier than the 2020-21 season and they do not provide statistics for any of the teams. As for statistics, this is not an issue we are able to solve due to the problem of finding the data for every single player on any team including D2 or D3 teams. It looks like we will be able to effectively answer all of the questions that we listed before break.
+
+Question 1: What states produce the most D1 women's basketball players?
+
+```{r}
+players_by_state_2020_21 <- roster_2020_21 |>
+  group_by(state_clean) |>
+  summarize(
+    count_2020 = n()
+  ) |>
+  filter(state_clean != "NA")
+
+players_by_state_2021_22 <- roster_2021_22 |>
+  group_by(state_clean) |>
+  summarize(
+    count_2021 = n()
+  ) |>
+  filter(state_clean != "NA")
+
+players_by_state_2022_23 <- roster_2022_23 |>
+  group_by(state_clean) |>
+  summarize(
+    count_2022 = n()
+  ) |>
+  filter(state_clean != "NA", state_clean != "USVI")
+
+players_by_state_2023_24 <- roster_2023_24 |>
+  group_by(state_clean) |>
+  summarize(
+    count_2023 = n()
+  ) |>
+  filter(state_clean != "NA")
+
+players_change_over_time <- players_by_state_2020_21 |>
+  left_join(players_by_state_2021_22, by = "state_clean") |>
+  left_join(players_by_state_2022_23, by = "state_clean") |>
+  left_join(players_by_state_2023_24, by = "state_clean") |>
+  mutate(total_players = count_2020 + count_2021 + count_2022 + count_2023) |>
+  mutate(percentage_change = (count_2023 - count_2020)/count_2020*100) |>
+  arrange(desc(total_players))
+
+players_change_over_time
+```
+
+Note: Pennsylvania has the produced the most women's college basketball players over the last four years with Texas in second place.
+
+Question 2: Which power 5 conferences have the tallest teams?
+
+```{r}
+roster_2023_24 |>
+  filter(conference == 'Pac-12' | conference == 'SEC' | conference == 'Big 12' | conference == 'ACC' | conference == 'Big Ten') |>
+  group_by(team) |>
+  summarize(
+    total_players = n(),
+    total_height = sum(total_inches),
+    mean_total_inches = total_height/total_players
+  ) |>
+  arrange(desc(mean_total_inches))
+```
+
+Notes: Texas is the tallest team in the power five with an average height of over 6'1". UCLA, Indiana, South Carolina, Michigan and Missouri are all not far behind.
